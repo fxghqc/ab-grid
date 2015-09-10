@@ -1,0 +1,40 @@
+{
+  "name": "ab-grid",
+  "version": "0.1.0",
+  "description": "angular bootstrap data grid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fxghqc/ab-grid.git"
+  },
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "data",
+    "grid"
+  ],
+  "author": "konxiao@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fxghqc/ab-grid/issues"
+  },
+  "homepage": "https://github.com/fxghqc/ab-grid#readme",
+  "devDependencies": {
+    "change-case": "^2.3.0",
+    "gulp": "^3.9.0",
+    "gulp-foreach": "^0.1.0",
+    "gulp-header": "^1.7.1",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-tslint": "^3.2.0",
+    "gulp-typescript": "^2.8.2",
+    "gulp-uglify": "^1.4.1",
+    "merge2": "^0.3.6",
+    "path": "^0.11.14"
+  }
+}

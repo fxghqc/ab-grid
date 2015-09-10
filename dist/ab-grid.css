@@ -1,0 +1,170 @@
+/*
+ * override fresh style
+ */
+.ab-grid {
+  color: darkslategrey;
+  border: none;
+}
+.ab-grid .ag-fresh {
+  font-size: 14px;
+  position: absolute;
+  top: 42px;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+.ab-grid .ag-fresh .ag-root {
+  border: 1px solid #dddddd;
+}
+.ab-grid .ag-fresh .ag-body {
+  background-color: white;
+}
+.ab-grid .ag-fresh .ag-header-container {
+  line-height: 16px;
+  background: none;
+  background-color: white;
+  border-bottom: 1px solid #dddddd;
+}
+.ab-grid .ag-fresh .ag-header-cell {
+  border-right: 1px solid #dddddd;
+}
+.ab-grid .ag-fresh .ag-body-container {
+  line-height: 24px;
+}
+.ab-grid .ag-fresh .ag-body-viewport {
+  position: relative;
+  height: 100%;
+}
+.ab-grid .ag-fresh .ag-cell-wrapper {
+  display: block;
+}
+.ab-grid .ag-fresh .ag-cell {
+  outline: none;
+}
+.ab-grid .ag-fresh .ag-cell input[type="checkbox"] {
+  margin: 0;
+  vertical-align: bottom;
+  position: relative;
+  bottom: 6px;
+  margin-right: 5px;
+}
+.ab-grid .ag-fresh .ag-cell input.ag-cell-edit-input {
+  line-height: 18px;
+}
+.ab-grid .ag-fresh .ag-cell select.ag-cell-edit-select {
+  line-height: 18px;
+  border: 1px solid #cccccc;
+  background-color: #fafafa;
+}
+.ab-grid .ag-fresh .ag-cell.has-error {
+  box-shadow: inset 0px 0px 30px 1px rgba(236, 188, 0, 0.8);
+}
+.ab-grid .ag-fresh .ag-cell-no-focus {
+  border-right: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+}
+.ab-grid .ag-fresh .ag-header-cell-menu-button,
+.ab-grid .ag-fresh .ag-header-cell-menu-button:hover {
+  border: none;
+}
+.ab-grid .ag-fresh .ag-filter {
+  border: 1px solid #aaaaaa;
+}
+.ab-grid .ag-fresh .ag-paging-panel {
+  color: #5d5d5d;
+  line-height: 22px;
+  font-size: 12px;
+}
+.ab-grid .ag-fresh .ag-paging-row-summary-panel-x {
+  padding-top: 2px;
+}
+.ab-grid .ag-fresh .ag-paging-page-summary-panel {
+  text-align: center;
+}
+.ab-grid .ag-fresh ag-paging-total-summary-panel {
+  padding-top: 2px;
+}
+.ab-grid .ag-fresh .ag-paging-button {
+  color: #337ab7;
+  border: 1px solid #cccccc;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 14px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.ab-grid .ag-fresh .ag-paging-button:focus {
+  outline: none;
+}
+.ab-grid .ag-fresh .ag-paging-button:active {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.ab-grid .ag-fresh .ag-paging-button[disabled] {
+  color: #878787;
+}
+.ab-grid .ag-noborder .ag-root {
+  border: none;
+}
+.ab-grid .panel-border {
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+.ab-grid .panel-body {
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-top: none;
+}
+.ab-grid .panel-heading {
+  border-radius: 0;
+  color: darkslategrey;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+.ab-grid .panel-heading .panel-heading-title {
+  display: inline-block;
+}
+.ab-grid .panel-heading .panel-heading-title:after {
+  margin-left: 10px;
+  content: '|';
+  color: #dddddd;
+}
+.ab-grid .panel-heading .panel-heading-toolbox {
+  display: inline-block;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .toolbox-delimiter:after {
+  line-height: 18px;
+  float: left;
+  content: '|';
+  color: #dddddd;
+}
+.ab-grid .panel-heading .panel-heading-toolbox i.fa-info-circle {
+  color: seagreen;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .has-error {
+  color: red !important;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .toolbox-tooltip {
+  position: absolute;
+  bottom: 16px;
+  background-color: #FCB393;
+  padding: 5px 9px;
+  border-radius: 3px;
+}
+.ab-grid .panel-heading .panel-heading-toolbox.btn-group-sm .btn {
+  padding: 0px 10px;
+}
+.ab-grid .panel-heading form {
+  margin-top: -2px;
+}
+.ab-grid .panel-footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  border-top: none;
+}
