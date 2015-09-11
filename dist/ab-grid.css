@@ -104,6 +104,7 @@
 }
 .ab-grid .panel-body {
   border-top: none;
+  padding: 0;
 }
 .ab-grid .panel-heading {
   border-radius: 0;
@@ -150,4 +151,68 @@
 }
 .ab-grid .panel-footer {
   border-top: none;
+}
+/*
+ * bootstrap
+ */
+.input-ssm {
+  height: 25px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.form-group-ssm .form-control {
+  height: 25px;
+  padding: 3px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.form-group-ssm.has-feedback .form-control {
+  padding-right: 42.5px;
+}
+.input-ssm + .form-control-feedback,
+.input-group-ssm + .form-control-feedback,
+.form-group-ssm .form-control + .form-control-feedback {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+.btn-darkslategrey {
+  color: darkslategrey;
+}
+.btn-clear,
+.btn-clear:hover,
+.btn-clear:focus,
+.btn-clear:active,
+.btn-clear:active:hover {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+.btn-clear:focus,
+.btn-clear:active:focus {
+  outline: none;
+}
+.btn-darkslategrey.btn-clear:active {
+  color: #89a5a5;
+}
+.btn-clear:active {
+  box-shadow: none;
+}
+.btn-clear.trim-left {
+  padding-left: 0;
+}
+.btn-toolbar.toolbar-clear .btn-group:first-child {
+  margin-left: 0;
+}
+.btn-toolbar.toolbar-clear .btn {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+.btn-ssm,
+.btn-group-ssm > .btn {
+  padding: 3px 9px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
 }

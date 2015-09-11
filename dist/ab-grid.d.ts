@@ -100,9 +100,9 @@ declare module ABGrid {
     }
     class ABGridCtrl {
         protected $scope: ABGrid.ICustomerSearchScope;
-        protected GridStatus: ABGrid.IGridStatus;
+        protected GridStatus: typeof ABGrid.GridStatus;
         protected $timeout: ng.ITimeoutService;
-        constructor($scope: ABGrid.ICustomerSearchScope, GridStatus: ABGrid.IGridStatus, $timeout: ng.ITimeoutService);
+        constructor($scope: ABGrid.ICustomerSearchScope, GridStatus: typeof ABGrid.GridStatus, $timeout: ng.ITimeoutService);
     }
 }
 declare module ABGrid {

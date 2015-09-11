@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="abGridExample">
+
+  <head>
+    <link data-require="font-awesome@4.3.0" data-semver="4.3.0" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="lib/css/angular-grid.css">
+    <link rel="stylesheet" href="lib/css/theme-fresh.css">
+    <script src="lib/js/min/perfect-scrollbar.min.js" type="text/javascript"></script>
+    <script data-require="angular.js@1.4.3" data-semver="1.4.3" src="https://code.angularjs.org/1.4.3/angular.js"></script>
+    <script src="lib/js/angular-grid.js" type="text/javascript"></script>
+    <script src="dist/ab-grid.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="dist/ab-grid.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body>
+    <div ng-controller="MainCtrl">
+      <ab-grid options="gridOptions" class="">
+        <ab-grid-title>
+          ab grid
+        </ab-grid-title>
+        <ab-grid-toolbox>
+          <ab-grid-toolbox-btn btn-click="addAttr()">
+            <i class="fa fa-plus-square"></i>&nbsp;添加
+          </ab-grid-toolbox-btn>
+          <ab-grid-toolbox-btn btn-click="removeAttr()">
+            <i class="fa fa-minus-square"></i>&nbsp;删除
+          </ab-grid-toolbox-btn>
+          <ab-grid-toolbox-delimiter></ab-grid-toolbox-delimiter>
+          <ab-grid-toolbox-btn>
+            <i class="fa fa-info-circle" ng-class="{'has-error': errorProxy.length > 0}" ng-mouseover="showErrorInfo = true" ng-mouseleave="showErrorInfo = false"></i>
+            <section class="toolbox-tooltip" ng-show="showErrorInfo && errorProxy.length > 0">
+              <div ng-repeat=" (field, error) in gridError.errorInfos track by field">
+                [{{error.name}}] {{error.info}}
+              </div>
+            </section>
+          </ab-grid-toolbox-btn>
+        </ab-grid-toolbox>
+        <ab-grid-search></ab-grid-search>
+      </ab-grid>
+    </div>
+  </body>
+
+</html>

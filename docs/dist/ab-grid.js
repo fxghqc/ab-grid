@@ -133,10 +133,10 @@ var ABGrid;
             this.template = '<div class="panel panel-default ab-grid">' +
                 '<div class="panel-heading" ng-transclude>' +
                 '</div>' +
-                '<div class="panel-body no-padding">' +
+                '<div class="panel-body">' +
                 '<div ag-grid="options" class="ag-fresh ag-noborder"></div>' +
                 '</div>' +
-                '<div class="panel-footer text-center"> ng-show="showFooter"' +
+                '<div class="panel-footer text-center" ng-show="showFooter">' +
                 '</div>' +
                 '</div>';
         }
@@ -217,8 +217,9 @@ var ABGrid;
             this.$scope = $scope;
             this.GridStatus = GridStatus;
             this.$timeout = $timeout;
+            var status = new this.GridStatus();
             $timeout(function () {
-                $scope.options.api.status = new this.GridStatus();
+                $scope.options.api.status = status;
             });
         }
         return ABGridCtrl;
@@ -226,6 +227,7 @@ var ABGrid;
     ABGrid.ABGridCtrl = ABGridCtrl;
     app.controller('ABGridCtrl', ['$scope', 'GridStatus', '$timeout', ABGrid.ABGridCtrl]);
     app.factory('PsUtils', ['$window', function ($window) { return new ABGrid.PsUtils($window); }]);
+    app.factory('GridStatus', [function () { return ABGrid.GridStatus; }]);
     app.factory('ABGrid', ['$timeout', '$window', function ($timeout, $window) { return new ABGrid.GridService($timeout, $window); }]);
     app.directive("abGrid", ['$log', 'PsUtils', function ($log, PsUtils) { return new ABGrid.ABGridDirective($log, PsUtils); }]);
     app.directive("abGridTitle", [function () { return new ABGrid.ABGridTtile(); }]);
