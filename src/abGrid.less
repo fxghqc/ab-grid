@@ -32,11 +32,6 @@
 
     font-size: @ag-font-size;
 
-    position: absolute;
-    top: 42px;
-    bottom: 50px;
-    left: 0px;
-    right: 0px;
     border-left: @grid-border;
     border-right: @grid-border;
     border-bottom: @grid-border;
@@ -175,14 +170,7 @@
     .ag-cell {}
   }
 
-  .panel-border {
-    border-top: @grid-border;
-    border-left: @grid-border;
-    border-right: @grid-border;
-  }
-
   .panel-body {
-    .panel-border();
     border-top: none;
   }
 
@@ -191,7 +179,9 @@
 
     border-radius: 0;
     color: @ab-color;
-    .panel-border();
+    border-top: @grid-border;
+    border-left: @grid-border;
+    border-right: @grid-border;
 
     .panel-heading-title {
       display: inline-block;
@@ -236,10 +226,6 @@
   }
 
   .panel-footer {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
     border-top: none;
   }
 }
