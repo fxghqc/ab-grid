@@ -16,7 +16,7 @@ module ABGrid {
         public replace: boolean = false;
         public controller: string = 'ABGridCtrl';
         public controllerAs: string = 'grid';
-        public scope: any = { options: '=', status: '=' };
+        public scope: any = { options: '=', status: '=', showFooter: '=' };
         public link = (scope: any, element: any) => {
             this.$log.debug('init perfect scrollbar');
             this.PsUtils.initialize(element[0].firstChild.querySelector('.ab-grid .ag-body-viewport'));
@@ -28,7 +28,7 @@ module ABGrid {
                     '<div class="panel-body no-padding">' +
                         '<div ag-grid="options" class="ag-fresh ag-noborder"></div>' +
                     '</div>' +
-                    '<div class="panel-footer text-center">' +
+                    '<div class="panel-footer text-center"> ng-show="showFooter"' +
                     '</div>' +
                 '</div>';
     }
