@@ -7,11 +7,6 @@
 }
 .ab-grid .ag-fresh {
   font-size: 14px;
-  position: absolute;
-  top: 42px;
-  bottom: 50px;
-  left: 0px;
-  right: 0px;
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
@@ -107,15 +102,7 @@
 .ab-grid .ag-noborder .ag-root {
   border: none;
 }
-.ab-grid .panel-border {
-  border-top: 1px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-}
 .ab-grid .panel-body {
-  border-top: 1px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
   border-top: none;
 }
 .ab-grid .panel-heading {
@@ -162,9 +149,5 @@
   margin-top: -2px;
 }
 .ab-grid .panel-footer {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
   border-top: none;
 }
