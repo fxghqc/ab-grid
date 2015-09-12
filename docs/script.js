@@ -40,7 +40,8 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
   $scope.gridOptions = {
       columnDefs: columnDefs,
-      rowData: rowData
+      rowData: rowData,
+      rowsBuffer: 203     // use rowsBuffer when cols number is very large;
   };
 
 }]);
