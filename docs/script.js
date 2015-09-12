@@ -6,6 +6,10 @@ app.controller('MainCtrl', ['$scope', function($scope) {
   var i, cols = 100, rows = 100;
 
   var columnDefs = [
+      {headerName: 'Order', field: 'order', cellRenderer: function(params) {
+         return params.node.id + 1;
+       }, width: 50
+      },
       {headerName: "Make", field: "make"},
       {headerName: "Model", field: "model"},
       {headerName: "Price", field: "price"}
