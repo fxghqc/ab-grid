@@ -55,7 +55,7 @@ declare module ABGrid {
         controller: string;
         controllerAs: string;
         scope: any;
-        link: (scope: any, element: any) => void;
+        link: (scope: any, element: any, attrs: any) => void;
         template: string;
     }
     class ABGridTtile implements ng.IDirective {

@@ -15,10 +15,17 @@ var ABGrid;
             this.replace = false;
             this.controller = 'ABGridCtrl';
             this.controllerAs = 'grid';
-            this.scope = { options: '=', status: '=', showFooter: '=' };
-            this.link = function (scope, element) {
+            this.scope = { options: '=', status: '=', showFooter: '=', abSize: '@' };
+            this.link = function (scope, element, attrs) {
                 _this.$log.debug('init perfect scrollbar');
                 _this.PsUtils.initialize(element[0].firstChild.querySelector('.ab-grid .ag-body-viewport'));
+                switch (attrs.abSize) {
+                    case 'small':
+                        element.addClass('ab-sm');
+                        break;
+                    default:
+                        break;
+                }
             };
             this.template = '<div class="panel panel-default ab-grid">' +
                 '<div class="panel-heading" ng-transclude>' +

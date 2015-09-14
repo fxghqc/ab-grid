@@ -1,6 +1,19 @@
 /*
  * override fresh style
  */
+
+.ab-sm .ab-grid {
+  @ab-sm-font-size: 12px;
+
+  font-size: @ab-sm-font-size;
+
+  .ag-fresh {
+    .ag-header, .ag-body {
+      font-size: 12px;
+    }
+  }
+}
+
 .ab-grid {
   @ab-color: darkslategrey;
   @border-color: #DDDDDD;

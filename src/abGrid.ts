@@ -16,10 +16,18 @@ module ABGrid {
         public replace: boolean = false;
         public controller: string = 'ABGridCtrl';
         public controllerAs: string = 'grid';
-        public scope: any = { options: '=', status: '=', showFooter: '=' };
-        public link = (scope: any, element: any) => {
+        public scope: any = { options: '=', status: '=', showFooter: '=', abSize: '@' };
+        public link = (scope: any, element: any, attrs: any) => {
             this.$log.debug('init perfect scrollbar');
             this.PsUtils.initialize(element[0].firstChild.querySelector('.ab-grid .ag-body-viewport'));
+            
+            switch(attrs.abSize) {
+                case 'small':
+                    element.addClass('ab-sm');
+                    break;
+                default:
+                    break;
+            }
         };
         public template: string =
                 '<div class="panel panel-default ab-grid">' +

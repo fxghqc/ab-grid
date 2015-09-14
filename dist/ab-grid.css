@@ -1,6 +1,13 @@
 /*
  * override fresh style
  */
+.ab-sm .ab-grid {
+  font-size: 12px;
+}
+.ab-sm .ab-grid .ag-fresh .ag-header,
+.ab-sm .ab-grid .ag-fresh .ag-body {
+  font-size: 12px;
+}
 .ab-grid {
   color: darkslategrey;
   border: none;
@@ -27,7 +34,7 @@
   border-right: 1px solid #dddddd;
 }
 .ab-grid .ag-fresh .ag-body-container {
-  line-height: 24px;
+  line-height: 19px;
 }
 .ab-grid .ag-fresh .ag-body-viewport {
   position: relative;
