@@ -20,7 +20,7 @@ module ABGrid {
         public link = (scope: any, element: any, attrs: any) => {
             this.$log.debug('init perfect scrollbar');
             this.PsUtils.initialize(element[0].firstChild.querySelector('.ab-grid .ag-body-viewport'));
-            
+
             switch(attrs.abSize) {
                 case 'small':
                     element.addClass('ab-sm');
@@ -55,9 +55,30 @@ module ABGrid {
         public restrict: string = 'E';
         public transclude: boolean = true;
         public replace: boolean = true;
+        //public scope: any = {};
         public template: string =
-                '<div class="panel-heading-toolbox btn-group btn-group-sm" ' +
-                    'role="group" aria-label="..." ng-transclude>' +
+                '<div class="panel-heading-toolbox" role="toolbar" aria-label="...">' +
+                    '<div class="btn-group btn-group-sm" role="group" aria-label="..." ng-transclude>' +
+                    '</div>' +
+                    '<div class="btn-group btn-group-sm" dropdown keyboard-nav>' +
+                        '<button id="simple-btn-keyboard-nav" type="button" class="btn btn-darkslategrey btn-clear" dropdown-toggle>' +
+                            'settings <span class="caret"></span>' +
+                        '</button>' +
+                        '<ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">' +
+                            '<li role="menuitem" ng-mouseover="showColumns = true" ng-mouseleave="showColumns = false">' +
+                                '<a href="#">Columns</a>' +
+                                '<ul class="sencond-list" ng-show="showColumns">' +
+                                    '<li ng-repeat="col in $parent.options.columnDefs">' +
+                                      '{{col.headerName}}' +
+                                    '</li>' +
+                                '</ul>' +
+                            '</li>' +
+                            '<li role="menuitem"><a href="#">Another</a></li>' +
+                            '<li role="menuitem"><a href="#">Something</a></li>' +
+                            '<li class="divider"></li>' +
+                            '<li role="menuitem"><a href="#">Separated</a></li>' +
+                        '</ul>' +
+                    '</div>' +
                 '</div>';
     }
 

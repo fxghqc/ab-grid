@@ -150,8 +150,14 @@
   padding: 5px 9px;
   border-radius: 3px;
 }
-.ab-grid .panel-heading .panel-heading-toolbox.btn-group-sm .btn {
+.ab-grid .panel-heading .panel-heading-toolbox .btn-group-sm .btn {
   padding: 0px 10px;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .btn-group.open .dropdown-toggle {
+  box-shadow: none;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list {
+  position: static;
 }
 .ab-grid .panel-heading form {
   margin-top: -2px;

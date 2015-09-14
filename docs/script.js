@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('abGridExample', ['angularGrid', 'ABGrid']);
+var app = angular.module('abGridExample', ['angularGrid', 'ui.bootstrap', 'ABGrid']);
 
 app.controller('MainCtrl', ['$scope', function($scope) {
   var i, cols = 100, rows = 100;
