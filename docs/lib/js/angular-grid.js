@@ -1,9 +1,137 @@
 /**
  * angular-grid - High performance and feature rich data grid for AngularJS
- * @version v1.15.0
+ * @version v1.16.0
  * @link http://www.angulargrid.com/
  * @license MIT
  */
+// todo:
+// + need to hook into destroy callback
+// + how can we make this element extend div?
+var awk;
+(function (awk) {
+    var grid;
+    (function (grid) {
+        // we are not using annotations on purpose, as if we do, then there is a runtime dependency
+        // on the annotation, which would break this code if angular 2 was not included, which is bad,
+        // as angular 2 is optional for ag-grid
+        var AgGridDirective = (function () {
+            function AgGridDirective(elementDef) {
+                this.elementDef = elementDef;
+                this.modelUpdated = new ng.EventEmitter();
+                this.cellClicked = new ng.EventEmitter();
+                this.cellDoubleClicked = new ng.EventEmitter();
+                this.cellValueChanged = new ng.EventEmitter();
+                this.cellFocused = new ng.EventEmitter();
+                this.rowSelected = new ng.EventEmitter();
+                this.selectionChanged = new ng.EventEmitter();
+                this.beforeFilterChanged = new ng.EventEmitter();
+                this.afterFilterChanged = new ng.EventEmitter();
+                this.filterModified = new ng.EventEmitter();
+                this.beforeSortChanged = new ng.EventEmitter();
+                this.afterSortChanged = new ng.EventEmitter();
+                this.virtualRowRemoved = new ng.EventEmitter();
+                this.rowClicked = new ng.EventEmitter();
+                this.ready = new ng.EventEmitter();
+            }
+            Object.defineProperty(AgGridDirective.prototype, "gridOptions", {
+                set: function (gridOptions) {
+                    this._gridOptions = gridOptions;
+                    var nativeElement = this.elementDef.nativeElement;
+                    this._agGrid = new awk.grid.Grid(nativeElement, gridOptions, this.genericEventListener.bind(this));
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(AgGridDirective.prototype, "quickFilterText", {
+                set: function (text) {
+                    this._gridOptions.api.setQuickFilter(text);
+                },
+                enumerable: true,
+                configurable: true
+            });
+            AgGridDirective.prototype.genericEventListener = function (eventName, event) {
+                var emitter;
+                switch (eventName) {
+                    case grid.Constants.EVENT_MODEL_UPDATED:
+                        emitter = this.modelUpdated;
+                        break;
+                    case grid.Constants.EVENT_CELL_CLICKED:
+                        emitter = this.cellClicked;
+                        break;
+                    case grid.Constants.EVENT_CELL_DOUBLE_CLICKED:
+                        emitter = this.cellDoubleClicked;
+                        break;
+                    case grid.Constants.EVENT_CELL_VALUE_CHANGED:
+                        emitter = this.cellValueChanged;
+                        break;
+                    case grid.Constants.EVENT_CELL_FOCUSED:
+                        emitter = this.cellFocused;
+                        break;
+                    case grid.Constants.EVENT_ROW_SELECTED:
+                        emitter = this.rowSelected;
+                        break;
+                    case grid.Constants.EVENT_SELECTION_CHANGED:
+                        emitter = this.selectionChanged;
+                        break;
+                    case grid.Constants.EVENT_BEFORE_FILTER_CHANGED:
+                        emitter = this.beforeFilterChanged;
+                        break;
+                    case grid.Constants.EVENT_AFTER_FILTER_CHANGED:
+                        emitter = this.afterFilterChanged;
+                        break;
+                    case grid.Constants.EVENT_AFTER_SORT_CHANGED:
+                        emitter = this.afterSortChanged;
+                        break;
+                    case grid.Constants.EVENT_BEFORE_SORT_CHANGED:
+                        emitter = this.beforeSortChanged;
+                        break;
+                    case grid.Constants.EVENT_FILTER_MODIFIED:
+                        emitter = this.filterModified;
+                        break;
+                    case grid.Constants.EVENT_VIRTUAL_ROW_REMOVED:
+                        emitter = this.virtualRowRemoved;
+                        break;
+                    case grid.Constants.EVENT_ROW_CLICKED:
+                        emitter = this.rowClicked;
+                        break;
+                    case grid.Constants.EVENT_READY:
+                        emitter = this.ready;
+                        break;
+                }
+                if (emitter) {
+                    if (event === null || event === undefined) {
+                        event = {};
+                    }
+                    emitter.next(event);
+                }
+            };
+            return AgGridDirective;
+        })();
+        grid.AgGridDirective = AgGridDirective;
+        // provide a reference to angular
+        var ng = window.ng;
+        // check for angular and component, as if angular 1, we will find angular but the wrong version
+        if (ng && ng.Component) {
+            AgGridDirective.annotations = [
+                new ng.Component({
+                    selector: 'ag-grid-a2',
+                    events: ['modelUpdated', 'cellClicked', 'cellDoubleClicked', 'cellValueChanged', 'cellFocused',
+                        'rowSelected', 'selectionChanged', 'beforeFilterChanged', 'afterFilterChanged',
+                        'filterModified', 'beforeSortChanged', 'afterSortChanged', 'virtualRowRemoved',
+                        'rowClicked', 'ready'],
+                    properties: ['gridOptions', 'quickFilterText'],
+                    compileChildren: false // no angular on the inside thanks
+                }),
+                new ng.View({
+                    template: '',
+                    // tell angular we don't want view encapsulation, we don't want a shadow root
+                    encapsulation: ng.ViewEncapsulation.None
+                })
+            ];
+            AgGridDirective.parameters = [[ng.ElementRef]];
+        }
+    })(grid = awk.grid || (awk.grid = {}));
+})(awk || (awk = {}));
 var awk;
 (function (awk) {
     var grid;
@@ -472,6 +600,21 @@ var awk;
             Constants.KEY_UP = 38;
             Constants.KEY_LEFT = 37;
             Constants.KEY_RIGHT = 39;
+            Constants.EVENT_MODEL_UPDATED = 'modelUpdated';
+            Constants.EVENT_CELL_CLICKED = 'cellClicked';
+            Constants.EVENT_CELL_DOUBLE_CLICKED = 'cellDoubleClicked';
+            Constants.EVENT_CELL_VALUE_CHANGED = 'cellValueChanged';
+            Constants.EVENT_CELL_FOCUSED = 'cellFocused';
+            Constants.EVENT_ROW_SELECTED = 'rowSelected';
+            Constants.EVENT_SELECTION_CHANGED = 'selectionChanged';
+            Constants.EVENT_BEFORE_FILTER_CHANGED = 'beforeFilterChanged';
+            Constants.EVENT_AFTER_FILTER_CHANGED = 'afterFilterChanged';
+            Constants.EVENT_FILTER_MODIFIED = 'filterModified';
+            Constants.EVENT_BEFORE_SORT_CHANGED = 'beforeSortChanged';
+            Constants.EVENT_AFTER_SORT_CHANGED = 'afterSortChanged';
+            Constants.EVENT_VIRTUAL_ROW_REMOVED = 'virtualRowRemoved';
+            Constants.EVENT_ROW_CLICKED = 'rowClicked';
+            Constants.EVENT_READY = 'ready';
             return Constants;
         })();
         grid.Constants = Constants;
@@ -630,14 +773,19 @@ var awk;
 (function (awk) {
     var grid;
     (function (grid) {
-        var DEFAULT_ROW_HEIGHT = 30;
+        var DEFAULT_ROW_HEIGHT = 25;
         var constants = grid.Constants;
         function isTrue(value) {
             return value === true || value === 'true';
         }
         var GridOptionsWrapper = (function () {
-            function GridOptionsWrapper(gridOptions) {
+            function GridOptionsWrapper(gridOptions, genericEventListener, $scope) {
+                this.genericEventListeners = [];
                 this.gridOptions = gridOptions;
+                this.$scope = $scope;
+                if (genericEventListener) {
+                    this.genericEventListeners.push(genericEventListener);
+                }
                 this.headerHeight = gridOptions.headerHeight;
                 this.groupHeaders = gridOptions.groupHeaders;
                 this.rowHeight = gridOptions.rowHeight;
@@ -688,24 +836,10 @@ var awk;
             GridOptionsWrapper.prototype.isAngularCompileHeaders = function () { return isTrue(this.gridOptions.angularCompileHeaders); };
             GridOptionsWrapper.prototype.isDebug = function () { return isTrue(this.gridOptions.debug); };
             GridOptionsWrapper.prototype.getColumnDefs = function () { return this.gridOptions.columnDefs; };
-            GridOptionsWrapper.prototype.getBeforeFilterChanged = function () { return this.gridOptions.beforeFilterChanged; };
-            GridOptionsWrapper.prototype.getAfterFilterChanged = function () { return this.gridOptions.afterFilterChanged; };
-            GridOptionsWrapper.prototype.getFilterModified = function () { return this.gridOptions.filterModified; };
-            GridOptionsWrapper.prototype.getBeforeSortChanged = function () { return this.gridOptions.beforeSortChanged; };
-            GridOptionsWrapper.prototype.getAfterSortChanged = function () { return this.gridOptions.afterSortChanged; };
-            GridOptionsWrapper.prototype.getModelUpdated = function () { return this.gridOptions.modelUpdated; };
-            GridOptionsWrapper.prototype.getCellClicked = function () { return this.gridOptions.cellClicked; };
-            GridOptionsWrapper.prototype.getCellDoubleClicked = function () { return this.gridOptions.cellDoubleClicked; };
-            GridOptionsWrapper.prototype.getCellValueChanged = function () { return this.gridOptions.cellValueChanged; };
-            GridOptionsWrapper.prototype.getCellFocused = function () { return this.gridOptions.cellFocused; };
-            GridOptionsWrapper.prototype.getRowSelected = function () { return this.gridOptions.rowSelected; };
             GridOptionsWrapper.prototype.getColumnResized = function () { return this.gridOptions.columnResized; };
             GridOptionsWrapper.prototype.getColumnVisibilityChanged = function () { return this.gridOptions.columnVisibilityChanged; };
             GridOptionsWrapper.prototype.getColumnOrderChanged = function () { return this.gridOptions.columnOrderChanged; };
-            GridOptionsWrapper.prototype.getSelectionChanged = function () { return this.gridOptions.selectionChanged; };
-            GridOptionsWrapper.prototype.getVirtualRowRemoved = function () { return this.gridOptions.virtualRowRemoved; };
             GridOptionsWrapper.prototype.getDatasource = function () { return this.gridOptions.datasource; };
-            GridOptionsWrapper.prototype.getReady = function () { return this.gridOptions.ready; };
             GridOptionsWrapper.prototype.getRowBuffer = function () { return this.gridOptions.rowBuffer; };
             GridOptionsWrapper.prototype.isEnableSorting = function () { return isTrue(this.gridOptions.enableSorting) || isTrue(this.gridOptions.enableServerSideSorting); };
             GridOptionsWrapper.prototype.isEnableCellExpressions = function () { return isTrue(this.gridOptions.enableCellExpressions); };
@@ -813,6 +947,21 @@ var awk;
                         return defaultValue;
                     }
                 };
+            };
+            GridOptionsWrapper.prototype.fireEvent = function (eventName, event) {
+                var _this = this;
+                if (typeof this.gridOptions[eventName] === 'function') {
+                    this.gridOptions[eventName](event);
+                }
+                this.genericEventListeners.forEach(function (listener) {
+                    listener(eventName, event);
+                });
+                // if doing angular 1, and we have scope, then apply after firing the event
+                if (this.$scope) {
+                    setTimeout(function () {
+                        _this.$scope.$apply();
+                    }, 0);
+                }
             };
             return GridOptionsWrapper;
         })();
@@ -3748,9 +3897,7 @@ var awk;
                 if (typeof colDef.cellValueChanged === 'function') {
                     colDef.cellValueChanged(paramsForCallbacks);
                 }
-                if (typeof this.gridOptionsWrapper.getCellValueChanged() === 'function') {
-                    this.gridOptionsWrapper.getCellValueChanged()(paramsForCallbacks);
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_CELL_VALUE_CHANGED, paramsForCallbacks);
                 _.removeAllChildren(this.vGridCell.getElement());
                 if (this.checkboxSelection) {
                     this.vGridCell.appendChild(this.vCellWrapper.getElement());
@@ -3761,20 +3908,18 @@ var awk;
                 var that = this;
                 var colDef = this.column.colDef;
                 this.vGridCell.addEventListener('dblclick', function (event) {
-                    if (that.gridOptionsWrapper.getCellDoubleClicked()) {
-                        var paramsForGrid = {
-                            node: that.node,
-                            data: that.node.data,
-                            value: that.value,
-                            rowIndex: that.rowIndex,
-                            colDef: colDef,
-                            event: event,
-                            eventSource: this,
-                            context: that.gridOptionsWrapper.getContext(),
-                            api: that.gridOptionsWrapper.getApi()
-                        };
-                        that.gridOptionsWrapper.getCellDoubleClicked()(paramsForGrid);
-                    }
+                    var paramsForGrid = {
+                        node: that.node,
+                        data: that.node.data,
+                        value: that.value,
+                        rowIndex: that.rowIndex,
+                        colDef: colDef,
+                        event: event,
+                        eventSource: this,
+                        context: that.gridOptionsWrapper.getContext(),
+                        api: that.gridOptionsWrapper.getApi()
+                    };
+                    that.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_CELL_DOUBLE_CLICKED, paramsForGrid);
                     if (colDef.cellDoubleClicked) {
                         var paramsForColDef = {
                             node: that.node,
@@ -3837,20 +3982,18 @@ var awk;
                     if (!that.node.floating) {
                         that.focusCell(false);
                     }
-                    if (that.gridOptionsWrapper.getCellClicked()) {
-                        var paramsForGrid = {
-                            node: that.node,
-                            data: that.node.data,
-                            value: that.value,
-                            rowIndex: that.rowIndex,
-                            colDef: colDef,
-                            event: event,
-                            eventSource: this,
-                            context: that.gridOptionsWrapper.getContext(),
-                            api: that.gridOptionsWrapper.getApi()
-                        };
-                        that.gridOptionsWrapper.getCellClicked()(paramsForGrid);
-                    }
+                    var paramsForGrid = {
+                        node: that.node,
+                        data: that.node.data,
+                        value: that.value,
+                        rowIndex: that.rowIndex,
+                        colDef: colDef,
+                        event: event,
+                        eventSource: this,
+                        context: that.gridOptionsWrapper.getContext(),
+                        api: that.gridOptionsWrapper.getApi()
+                    };
+                    that.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_CELL_CLICKED, paramsForGrid);
                     if (colDef.cellClicked) {
                         var paramsForColDef = {
                             node: that.node,
@@ -4086,7 +4229,7 @@ var awk;
                         this.vParentOfValue.setInnerHtml(template);
                     }
                 }
-                else if (colDef.floatingCellRenderer) {
+                else if (colDef.floatingCellRenderer && this.node.floating) {
                     this.useCellRenderer(colDef.floatingCellRenderer);
                 }
                 else if (colDef.cellRenderer) {
@@ -4923,9 +5066,8 @@ var awk;
             RowRenderer.prototype.unbindVirtualRow = function (indexToRemove) {
                 var renderedRow = this.renderedRows[indexToRemove];
                 renderedRow.destroy();
-                if (this.gridOptionsWrapper.getVirtualRowRemoved()) {
-                    this.gridOptionsWrapper.getVirtualRowRemoved()(renderedRow.getRowNode().data, indexToRemove);
-                }
+                var event = { node: renderedRow.getRowNode(), rowIndex: indexToRemove };
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_VIRTUAL_ROW_REMOVED, event);
                 this.angularGrid.onVirtualRowRemoved(indexToRemove);
                 delete this.renderedRows[indexToRemove];
             };
@@ -5112,9 +5254,7 @@ var awk;
                 if (forceBrowserFocus) {
                     eCell.focus();
                 }
-                if (typeof this.gridOptionsWrapper.getCellFocused() === 'function') {
-                    this.gridOptionsWrapper.getCellFocused()(this.focusedCell);
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_CELL_FOCUSED, this.focusedCell);
             };
             // for API
             RowRenderer.prototype.getFocusedCell = function () {
@@ -5371,8 +5511,9 @@ var awk;
                     this.addCssClassForNode_andInformVirtualRowListener(node.sibling);
                 }
                 // inform the rowSelected listener, if any
-                if (!suppressEvents && typeof this.gridOptionsWrapper.getRowSelected() === "function") {
-                    this.gridOptionsWrapper.getRowSelected()(node.data, node);
+                if (!suppressEvents) {
+                    var event = { node: node };
+                    this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_ROW_SELECTED, event);
                 }
                 return true;
             };
@@ -5472,8 +5613,8 @@ var awk;
                 // this stop the event firing the very first the time grid is initialised. without this, the documentation
                 // page had a popup in the 'selection' page as soon as the page was loaded!!
                 var nothingChangedMustBeInitialising = oldCount === 0 && selectedRows.length === 0;
-                if (!nothingChangedMustBeInitialising && !suppressEvents && typeof this.gridOptionsWrapper.getSelectionChanged() === "function") {
-                    this.gridOptionsWrapper.getSelectionChanged()();
+                if (!nothingChangedMustBeInitialising && !suppressEvents) {
+                    this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_SELECTION_CHANGED);
                 }
                 var that = this;
                 if (this.$scope) {
@@ -6366,15 +6507,7 @@ var awk;
                     case constants.STEP_MAP:
                         this.doGroupMapping();
                 }
-                if (typeof this.gridOptionsWrapper.getModelUpdated() === 'function') {
-                    this.gridOptionsWrapper.getModelUpdated()();
-                    var $scope = this.$scope;
-                    if ($scope) {
-                        setTimeout(function () {
-                            $scope.$apply();
-                        }, 0);
-                    }
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_MODEL_UPDATED);
             };
             InMemoryRowController.prototype.defaultGroupAggFunctionFactory = function (valueColumns, valueKeys) {
                 return function groupAggFunction(rows) {
@@ -9069,10 +9202,14 @@ var awk;
     var grid;
     (function (grid) {
         var Grid = (function () {
-            function Grid(eGridDiv, gridOptions, $scope, $compile, quickFilterOnScope) {
+            function Grid(eGridDiv, gridOptions, genericEventListener, $scope, $compile, quickFilterOnScope) {
+                if (genericEventListener === void 0) { genericEventListener = null; }
+                if ($scope === void 0) { $scope = null; }
+                if ($compile === void 0) { $compile = null; }
+                if (quickFilterOnScope === void 0) { quickFilterOnScope = null; }
                 this.virtualRowCallbacks = {};
                 this.gridOptions = gridOptions;
-                this.gridOptionsWrapper = new grid.GridOptionsWrapper(this.gridOptions);
+                this.gridOptionsWrapper = new grid.GridOptionsWrapper(this.gridOptions, genericEventListener, $scope);
                 this.setupComponents($scope, $compile, eGridDiv);
                 this.gridOptions.api = new grid.GridApi(this, this.rowRenderer, this.headerRenderer, this.filterManager, this.columnController, this.inMemoryRowController, this.selectionController, this.gridOptionsWrapper, this.gridPanel, this.valueService, this.masterSlaveService);
                 this.gridOptions.columnApi = this.columnController.getColumnApi();
@@ -9101,9 +9238,8 @@ var awk;
                 this.finished = false;
                 this.periodicallyDoLayout();
                 // if ready function provided, use it
-                if (typeof this.gridOptionsWrapper.getReady() == 'function') {
-                    this.gridOptionsWrapper.getReady()(gridOptions.api);
-                }
+                var readyParams = { api: gridOptions.api };
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_READY, readyParams);
             }
             Grid.prototype.periodicallyDoLayout = function () {
                 if (!this.finished) {
@@ -9294,14 +9430,10 @@ var awk;
                 }
             };
             Grid.prototype.onFilterModified = function () {
-                if (typeof this.gridOptionsWrapper.getFilterModified() === 'function') {
-                    this.gridOptionsWrapper.getFilterModified()();
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_FILTER_MODIFIED);
             };
             Grid.prototype.onFilterChanged = function () {
-                if (typeof this.gridOptionsWrapper.getBeforeFilterChanged() === 'function') {
-                    this.gridOptionsWrapper.getBeforeFilterChanged()();
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_BEFORE_FILTER_CHANGED);
                 this.filterManager.onFilterChanged();
                 this.headerRenderer.updateFilterIcons();
                 if (this.gridOptionsWrapper.isEnableServerSideFilter()) {
@@ -9313,20 +9445,16 @@ var awk;
                     // if doing in memory filtering, we just update the in memory data
                     this.updateModelAndRefresh(grid.Constants.STEP_FILTER);
                 }
-                if (typeof this.gridOptionsWrapper.getAfterFilterChanged() === 'function') {
-                    this.gridOptionsWrapper.getAfterFilterChanged()();
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_AFTER_FILTER_CHANGED);
             };
             Grid.prototype.onRowClicked = function (event, rowIndex, node) {
-                if (this.gridOptions.rowClicked) {
-                    var params = {
-                        node: node,
-                        data: node.data,
-                        event: event,
-                        rowIndex: rowIndex
-                    };
-                    this.gridOptions.rowClicked(params);
-                }
+                var params = {
+                    node: node,
+                    data: node.data,
+                    event: event,
+                    rowIndex: rowIndex
+                };
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_ROW_CLICKED, params);
                 // we do not allow selecting groups by clicking (as the click here expands the group)
                 // so return if it's a group row
                 if (node.group) {
@@ -9483,9 +9611,7 @@ var awk;
                 this.onSortingChanged();
             };
             Grid.prototype.onSortingChanged = function () {
-                if (typeof this.gridOptionsWrapper.getBeforeSortChanged() === 'function') {
-                    this.gridOptionsWrapper.getBeforeSortChanged()();
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_BEFORE_SORT_CHANGED);
                 this.headerRenderer.updateSortIcons();
                 if (this.gridOptionsWrapper.isEnableServerSideSorting()) {
                     // if doing server side sorting, changing the sort has the impact
@@ -9496,9 +9622,7 @@ var awk;
                     // if doing in memory sorting, we just update the in memory data
                     this.updateModelAndRefresh(grid.Constants.STEP_SORT);
                 }
-                if (typeof this.gridOptionsWrapper.getAfterSortChanged() === 'function') {
-                    this.gridOptionsWrapper.getAfterSortChanged()();
-                }
+                this.gridOptionsWrapper.fireEvent(grid.Constants.EVENT_AFTER_SORT_CHANGED);
             };
             Grid.prototype.addVirtualRowListener = function (rowIndex, callback) {
                 if (!this.virtualRowCallbacks[rowIndex]) {
@@ -9557,13 +9681,15 @@ var awk;
     })(grid = awk.grid || (awk.grid = {}));
 })(awk || (awk = {}));
 /// <reference path="grid.ts" />
+/// <reference path="agGridNg2.ts" />
 (function () {
     // Establish the root object, `window` or `exports`
     var root = this;
     // provide a reference to angular
     var angular = window.angular;
-    // if angular is present, register the directive
-    if (typeof angular !== 'undefined') {
+    // if angular is present, register the directive - checking for 'module' and 'directive' also to make
+    // sure it's Angular 1 and not Angular 2
+    if (typeof angular !== 'undefined' && typeof angular.module !== 'undefined' && angular.directive !== 'undefined') {
         var angularModule = angular.module("angularGrid", []);
         angularModule.directive("angularGrid", function () {
             return {
@@ -9617,7 +9743,7 @@ var awk;
             }
         }
         var eGridDiv = $element[0];
-        var grid = new awk.grid.Grid(eGridDiv, gridOptions, $scope, $compile, quickFilterOnScope);
+        var grid = new awk.grid.Grid(eGridDiv, gridOptions, null, $scope, $compile, quickFilterOnScope);
         $scope.$on("$destroy", function () {
             grid.setFinished();
         });
@@ -9643,6 +9769,6 @@ var awk;
         else {
             eGridDiv = element;
         }
-        new awk.grid.Grid(eGridDiv, gridOptions, null, null, null);
+        new awk.grid.Grid(eGridDiv, gridOptions);
     }
 }).call(window);
