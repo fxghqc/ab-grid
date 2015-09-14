@@ -10,15 +10,16 @@ app.controller('MainCtrl', ['$scope', function($scope) {
          return params.node.id + 1;
        }, width: 50
       },
-      {headerName: "Make", field: "make"},
-      {headerName: "Model", field: "model"},
-      {headerName: "Price", field: "price"}
+      {headerName: "Make", field: "make", width: 120},
+      {headerName: "Model", field: "model", width: 120},
+      {headerName: "Price", field: "price", width: 120}
   ];
 
   for (i = 0; i < cols; i++) {
     columnDefs.push({
       headerName: 'Price' + i,
-      field: 'price' + i
+      field: 'price' + i,
+      width: 120
     });
   }
 

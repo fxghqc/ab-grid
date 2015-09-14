@@ -3,3 +3,8 @@
 .ag-fresh {
   height: 800px;
 }
+
+.ag-fresh .ag-header,
+.ag-fresh .ag-body {
+  font-size: 12px;
+}
