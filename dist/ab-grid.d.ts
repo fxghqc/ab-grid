@@ -66,10 +66,14 @@ declare module ABGrid {
         template: string;
     }
     class ABGridToolbox implements ng.IDirective {
+        protected PsUtils: ABGrid.IPsUtils;
+        constructor(PsUtils: ABGrid.IPsUtils);
         require: string;
         restrict: string;
         transclude: boolean;
         replace: boolean;
+        controller: string;
+        link: (scope: any, element: any) => void;
         template: string;
     }
     class ABGridToolboxBtn implements ng.IDirective {
@@ -94,15 +98,27 @@ declare module ABGrid {
         controller: ($scope: any, $log: any) => void;
         template: string;
     }
-    interface ICustomerSearchScope extends ng.IScope {
+    interface IGridScope extends ng.IScope {
         options: any;
+        name: string;
         Ctrl: ABGridCtrl;
     }
+    interface ICustomerScope extends ng.IScope {
+        $parent: any;
+        abChanged: any;
+        showColumns: boolean;
+        Ctrl: ABGridToolboxCtrl;
+    }
     class ABGridCtrl {
-        protected $scope: ABGrid.ICustomerSearchScope;
+        protected $scope: ABGrid.IGridScope;
         protected GridStatus: typeof ABGrid.GridStatus;
         protected $timeout: ng.ITimeoutService;
-        constructor($scope: ABGrid.ICustomerSearchScope, GridStatus: typeof ABGrid.GridStatus, $timeout: ng.ITimeoutService);
+        constructor($scope: ABGrid.IGridScope, GridStatus: typeof ABGrid.GridStatus, $timeout: ng.ITimeoutService);
+    }
+    class ABGridToolboxCtrl {
+        protected $scope: ABGrid.ICustomerScope;
+        protected $timeout: ng.ITimeoutService;
+        constructor($scope: ABGrid.ICustomerScope, $timeout: ng.ITimeoutService);
     }
 }
 declare module ABGrid {

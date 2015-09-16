@@ -156,8 +156,39 @@
 .ab-grid .panel-heading .panel-heading-toolbox .btn-group.open .dropdown-toggle {
   box-shadow: none;
 }
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 .ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list {
-  position: static;
+  position: absolute;
+  left: 158px;
+  top: 0px;
+  height: 300px;
+  width: 150px;
+  overflow: auto;
+  pointer-events: all;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list .list-group-item {
+  list-style-type: none;
+  padding: 5px 10px;
+  border-right: none;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list .list-group-item div.checkbox {
+  margin: 0;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list .list-group-item:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+.ab-grid .panel-heading .panel-heading-toolbox .dropdown-menu .sencond-list .list-group-item:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
 }
 .ab-grid .panel-heading form {
   margin-top: -2px;
