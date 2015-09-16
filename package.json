@@ -1,6 +1,6 @@
 {
   "name": "ab-grid",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "angular bootstrap data grid",
   "main": "index.js",
   "scripts": {
