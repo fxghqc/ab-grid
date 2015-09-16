@@ -4,7 +4,9 @@
   "description": "angular bootstrap data grid",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp release",
+    "debug": "gulp"
   },
   "repository": {
     "type": "git",
